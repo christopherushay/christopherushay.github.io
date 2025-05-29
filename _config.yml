@@ -1,7 +1,7 @@
 lsi: false
 safe: true
 source: christopherushay.github.io
-theme: html5up-dimension
+theme: dimension
 incremental: false
 highlighter: rouge
 gist:
