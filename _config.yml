@@ -1,7 +1,6 @@
 lsi: false
 safe: true
 source: christopherushay.github.io
-theme: dimension
 incremental: false
 highlighter: rouge
 gist:
