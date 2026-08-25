@@ -41,7 +41,7 @@ a.ext:visited { color: var(--visited); }
   flex-wrap: wrap;
   gap: 0 0.3rem;
   margin-bottom: 4rem;
-  font-size: 13px;
+  font-size: 15px;
 }
 
 .site-nav .home {
