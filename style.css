@@ -10,7 +10,7 @@
   --accent:   #B5451B;   /* rust — internal links */
   --ext:      #2D6A8F;   /* slate — external links */
   --visited:  #7A3A6E;   /* plum — visited */
-  --max:      800px;
+  --max:      900px;
 }
 
 html { scroll-behavior: smooth; }
