@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Photography — Christopher Ushay</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;1,300;1,400&family=Libre+Baskerville:ital@0;1&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+
+    /* ── TAB BAR ── */
+    .tab-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0 0;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 2.5rem;
+    }
+
+    .tab-btn {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--mid);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      padding: 0.7rem 1.2rem 0.6rem;
+      cursor: pointer;
+      transition: color 0.2s ease, border-color 0.2s ease;
+      margin-bottom: -1px; /* sits on top of tab-bar border */
+    }
+
+    .tab-btn:hover  { color: var(--ink); }
+    .tab-btn.active { color: var(--ink); border-bottom-color: var(--accent); }
+
+    /* ── TAB PANELS ── */
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ── FULL-BLEED HERO IMAGE ── */
+    .photo-hero {
+      width: 100%;
+      aspect-ratio: 3/2;
+      overflow: hidden;
+      margin-bottom: 0.5rem;
+      background: #E4E0D7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .photo-hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .photo-hero span {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--mid);
+    }
+
+    /* ── LOCATION HEADER ── */
+    .location-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .location-title {
+      font-family: 'Cormorant', serif;
+      font-weight: 300;
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      letter-spacing: -0.01em;
+    }
+    .location-title em { font-style: italic; }
+
+    .location-date {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--mid);
+    }
+
+    /* ── PHOTO GRID ── */
+    /* Masonry-style: alternating layouts per row */
+    .photo-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-top: 0.4rem;
+    }
+
+    .photo-row {
+      display: grid;
+      gap: 0.4rem;
+    }
+
+    /* single full-width */
+    .photo-row.full   { grid-template-columns: 1fr; }
+
+    /* two equal */
+    .photo-row.halves { grid-template-columns: 1fr 1fr; }
+
+    /* one wide, one narrow */
+    .photo-row.wide-left  { grid-template-columns: 2fr 1fr; }
+    .photo-row.wide-right { grid-template-columns: 1fr 2fr; }
+
+    /* three equal */
+    .photo-row.thirds { grid-template-columns: 1fr 1fr 1fr; }
+
+    .photo-cell {
+      overflow: hidden;
+      background: #E4E0D7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    /* taller cells for portrait-orientation rows */
+    .photo-row.full     .photo-cell { aspect-ratio: 3/2; }
+    .photo-row.halves   .photo-cell { aspect-ratio: 3/4; }
+    .photo-row.wide-left  .photo-cell,
+    .photo-row.wide-right .photo-cell { aspect-ratio: 4/3; }
+    .photo-row.thirds   .photo-cell { aspect-ratio: 1; }
+
+    .photo-cell img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    .photo-cell:hover img { transform: scale(1.03); }
+
+    .photo-cell span {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--mid);
+    }
+
+    /* optional per-photo caption on hover */
+    .photo-cell .caption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 0.6rem 0.8rem;
+      background: linear-gradient(transparent, rgba(20,18,14,0.55));
+      font-size: 11px;
+      color: rgba(255,255,255,0.85);
+      letter-spacing: 0.06em;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+    .photo-cell:hover .caption { opacity: 1; }
+
+    /* ── LOCATION NOTE (optional short text) ── */
+    .location-note {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 0.88rem;
+      line-height: 1.85;
+      color: #3A3530;
+      margin: 1.8rem 0 0;
+      font-style: italic;
+    }
+
+  </style>
+</head>
+<body>
+
+  <nav class="site-nav">
+    <a href="index.html" class="home">Christopher Ushay</a>
+    <span class="sep">&nbsp;/</span>
+    <ul class="links">
+      <li><a href="about.html">about</a></li>
+      <li><a href="research.html">research</a></li>
+      <li><a href="teaching.html">teaching</a></li>
+      <li><a href="creative.html" class="active">photography</a></li>
+      <li><a href="cv.html">cv</a></li>
+    </ul>
+  </nav>
+
+  <h1 class="page-title">Photography</h1>
+  <p class="page-sub">travel &amp; place</p>
+
+  <hr>
+
+  <!-- TAB BAR -->
+  <div class="tab-bar" role="tablist">
+    <button class="tab-btn active" role="tab" data-tab="japan">Japan</button>
+    <button class="tab-btn" role="tab" data-tab="italy">Italy</button>
+    <button class="tab-btn" role="tab" data-tab="morocco">Morocco</button>
+    <button class="tab-btn" role="tab" data-tab="usa">United States</button>
+    <!-- Add more tabs here as: <button class="tab-btn" data-tab="slug">Label</button> -->
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- TAB: JAPAN                                  -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="tab-panel active" id="tab-japan">
+
+    <!-- Hero image for this destination -->
+    <div class="photo-hero">
+      <!-- <img src="images/japan-hero.jpg" alt="Japan"> -->
+      <span>hero — Japan</span>
+    </div>
+
+    <div class="location-header">
+      <h2 class="location-title"><em>Japan</em></h2>
+      <span class="location-date">2024</span>
+    </div>
+
+    <p class="s-label">Tokyo · Kyoto · Osaka</p>
+
+    <div class="photo-grid">
+
+      <!-- Row 1: two portrait images -->
+      <div class="photo-row halves">
+        <div class="photo-cell">
+          <!-- <img src="images/japan-01.jpg" alt=""> -->
+          <span>image</span>
+          <div class="caption">Shinjuku, Tokyo</div>
+        </div>
+        <div class="photo-cell">
+          <!-- <img src="images/japan-02.jpg" alt=""> -->
+          <span>image</span>
+          <div class="caption">Arashiyama, Kyoto</div>
+        </div>
+      </div>
+
+      <!-- Row 2: full width -->
+      <div class="photo-row full">
+        <div class="photo-cell">
+          <!-- <img src="images/japan-03.jpg" alt=""> -->
+          <span>image</span>
+          <div class="caption">Fushimi Inari</div>
+        </div>
+      </div>
+
+      <!-- Row 3: wide left -->
+      <div class="photo-row wide-left">
+        <div class="photo-cell">
+          <!-- <img src="images/japan-04.jpg" alt=""> -->
+          <span>image</span>
+          <div class="caption">Nishiki Market, Kyoto</div>
+        </div>
+        <div class="photo-cell" style="background: #DAD6CD;">
+          <!-- <img src="images/japan-05.jpg" alt=""> -->
+          <span>image</span>
+        </div>
+      </div>
+
+      <!-- Row 4: three equal -->
+      <div class="photo-row thirds">
+        <div class="photo-cell">
+          <!-- <img src="images/japan-06.jpg" alt=""> -->
+          <span>image</span>
+        </div>
+        <div class="photo-cell" style="background: #DAD6CD;">
+          <!-- <img src="images/japan-07.jpg" alt=""> -->
+          <span>image</span>
+        </div>
+        <div class="photo-cell" style="background: #EDEDE8;">
+          <!-- <img src="images/japan-08.jpg" alt=""> -->
+          <span>image</span>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="location-note">
+      A brief note about this trip, what drew you there, or what you were looking for photographically. Optional — delete if you'd prefer the images to speak alone.
+    </p>
+
+  </div><!-- /tab-japan -->
+
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- TAB: ITALY                                  -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="tab-panel" id="tab-italy">
+
+    <div class="photo-hero">
+      <!-- <img src="images/italy-hero.jpg" alt="Italy"> -->
+      <span>hero — Italy</span>
+    </div>
+
+    <div class="location-header">
+      <h2 class="location-title"><em>Italy</em></h2>
+      <span class="location-date">2023</span>
+    </div>
+
+    <p class="s-label">Rome · Naples · Cinque Terre</p>
+
+    <div class="photo-grid">
+
+      <div class="photo-row full">
+        <div class="photo-cell">
+          <!-- <img src="images/italy-01.jpg" alt=""> -->
+          <span>image</span>
+          <div class="caption">Colosseum, Rome</div>
+        </div>
+      </div>
+
+      <div class="photo-row wide-right">
+        <div class="photo-cell" style="background: #DAD6CD;">
+          <!-- <img src="images/italy-02.jpg" alt=""> -->
+          <span>image</span>
+        </div>
+        <div class="photo-cell">
+          <!-- <img src="images/italy-03.jpg" alt=""> -->
+          <span>image</span>
+          <div class="caption">Vernazza, Cinque Terre</div>
+        </div>
+      </div>
+
+      <div class="photo-row halves">
+        <div class="photo-cell">
+          <!-- <img src="images/italy-04.jpg" alt=""> -->
+          <span>image</span>
+        </div>
+        <div class="photo-cell" style="background: #EDEDE8;">
+          <!-- <img src="images/italy-05.jpg" alt=""> -->
+          <span>image</span>
+        </div>
+      </div>
+
+    </div>
+
+  </div><!-- /tab-italy -->
+
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- TAB: MOROCCO                                -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="tab-panel" id="tab-morocco">
+
+    <div class="photo-hero">
+      <!-- <img src="images/morocco-hero.jpg" alt="Morocco"> -->
+      <span>hero — Morocco</span>
+    </div>
+
+    <div class="location-header">
+      <h2 class="location-title"><em>Morocco</em></h2>
+      <span class="location-date">2022</span>
+    </div>
+
+    <p class="s-label">Marrakech · Fès · Sahara</p>
+
+    <div class="photo-grid">
+
+      <div class="photo-row halves">
+        <div class="photo-cell">
+          <!-- <img src="images/morocco-01.jpg" alt=""> -->
+          <span>image</span>
+          <div class="caption">Medina, Marrakech</div>
+        </div>
+        <div class="photo-cell" style="background: #DAD6CD;">
+          <!-- <img src="images/morocco-02.jpg" alt=""> -->
+          <span>image</span>
+        </div>
+      </div>
+
+      <div class="photo-row full">
+        <div class="photo-cell">
+          <!-- <img src="images/morocco-03.jpg" alt=""> -->
+          <span>image</span>
+          <div class="caption">Sahara Desert</div>
+        </div>
+      </div>
+
+      <div class="photo-row thirds">
+        <div class="photo-cell">
+          <!-- <img src="images/morocco-04.jpg" alt=""> -->
+          <span>image</span>
+        </div>
+        <div class="photo-cell" style="background: #EDEDE8;">
+          <!-- <img src="images/morocco-05.jpg" alt=""> -->
+          <span>image</span>
+        </div>
+        <div class="photo-cell" style="background: #DAD6CD;">
+          <!-- <img src="images/morocco-06.jpg" alt=""> -->
+          <span>image</span>
+        </div>
+      </div>
+
+    </div>
+
+  </div><!-- /tab-morocco -->
+
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- TAB: UNITED STATES                          -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="tab-panel" id="tab-usa">
+
+    <div class="photo-hero">
+      <!-- <img src="images/usa-hero.jpg" alt="United States"> -->
+      <span>hero — United States</span>
+    </div>
+
+    <div class="location-header">
+      <h2 class="location-title"><em>United States</em></h2>
+      <span class="location-date">ongoing</span>
+    </div>
+
+    <p class="s-label">New York · New Mexico · Pacific Coast</p>
+
+    <div class="photo-grid">
+
+      <div class="photo-row wide-left">
+        <div class="photo-cell">
+          <!-- <img src="images/usa-01.jpg" alt=""> -->
+          <span>image</span>
+          <div class="caption">New York City</div>
+        </div>
+        <div class="photo-cell" style="background: #DAD6CD;">
+          <!-- <img src="images/usa-02.jpg" alt=""> -->
+          <span>image</span>
+        </div>
+      </div>
+
+      <div class="photo-row halves">
+        <div class="photo-cell">
+          <!-- <img src="images/usa-03.jpg" alt=""> -->
+          <span>image</span>
+        </div>
+        <div class="photo-cell" style="background: #EDEDE8;">
+          <!-- <img src="images/usa-04.jpg" alt=""> -->
+          <span>image</span>
+        </div>
+      </div>
+
+      <div class="photo-row full">
+        <div class="photo-cell">
+          <!-- <img src="images/usa-05.jpg" alt=""> -->
+          <span>image</span>
+          <div class="caption">White Sands, New Mexico</div>
+        </div>
+      </div>
+
+    </div>
+
+  </div><!-- /tab-usa -->
+
+  <footer class="site-footer">
+    <p>© 2026 Christopher Michael Ushay</p>
+  </footer>
+
+  <script>
+    // Tab switching
+    const tabs    = document.querySelectorAll('.tab-btn');
+    const panels  = document.querySelectorAll('.tab-panel');
+
+    tabs.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.dataset.tab;
+
+        tabs.forEach(t => t.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('active'));
+
+        btn.classList.add('active');
+        document.getElementById('tab-' + target).classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>
