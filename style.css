@@ -208,7 +208,7 @@ hr { border: none; border-top: 1px solid var(--rule); margin: 2.5rem 0; }
 .hero-wrap {
   position: relative;        /* anchor for the overlay */
   width: 100%;
-  aspect-ratio: 2/1;         /* match whatever ratio your hero image is */
+  aspect-ratio: 16/9;         /* match whatever ratio your hero image is */
   overflow: hidden;
 }
 
