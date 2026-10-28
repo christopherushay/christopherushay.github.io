@@ -199,6 +199,9 @@ hr { border: none; border-top: 1px solid var(--rule); margin: 2.5rem 0; }
   /* 5. Prevent text clipping */
   line-height: 1.15; /* increase from whatever it currently is */
   padding-bottom: 0.1em;
+
+  /* 6. Increase font weight */
+  font-weight: 700; /* or 900 for maximum boldness */
 }
 
 @keyframes shimmer {
