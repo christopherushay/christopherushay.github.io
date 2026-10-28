@@ -171,3 +171,33 @@ hr { border: none; border-top: 1px solid var(--rule); margin: 2.5rem 0; }
   body { padding: 2rem 1.4rem 5rem; }
   .site-nav { margin-bottom: 2.5rem; }
 }
+
+/* ── TITLE GRADIENT ── */
+.gradient-title {
+  /* 1. Define an animated gradient as the background */
+  background: linear-gradient(
+    90deg,
+    #1C1A17 0%,
+    #1C1A17 30%,
+    #C9A87C 50%,   /* highlight color — warm gold, adjust to taste */
+    #1C1A17 70%,
+    #1C1A17 100%
+  );
+  background-size: 200% 100%; /* wider than the element so it can slide */
+
+  /* 2. Clip the background to the text shape */
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  /* 3. Make the text itself transparent so the background shows through */
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+
+  /* 4. Animate the background position */
+  animation: shimmer 4s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%   { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
