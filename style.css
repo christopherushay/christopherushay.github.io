@@ -56,7 +56,7 @@ a.ext:visited { color: var(--visited); }
 
 .site-nav .sep   { color: var(--rule); }
 .site-nav .links { display: flex; gap: 0 1.8rem; list-style: none; margin-left: 0.6rem; flex-wrap: wrap; }
-.site-nav .links a { color: var(--mid); text-decoration: none; font-size: 12px; letter-spacing: 0.06em; }
+.site-nav .links a { font-family: 'Karla', sans-serif; color: var(--mid); text-decoration: none; font-size: 13px; letter-spacing: 0.04em; }
 .site-nav .links a:hover { color: var(--ink); }
 .site-nav .links a.active { color: var(--ink); }
 
