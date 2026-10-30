@@ -208,7 +208,7 @@ hr { border: none; border-top: 1px solid var(--rule); margin: 2.5rem 0; }
 .hero-wrap {
   position: relative;        /* anchor for the overlay */
   width: 100%;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .hero-img {
