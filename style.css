@@ -46,7 +46,7 @@ a.ext:visited { color: var(--visited); }
 
 .site-nav .home {
   font-family: 'Bodoni Moda', serif;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 1.1rem;
   color: var(--ink);
   text-decoration: none;
@@ -75,7 +75,7 @@ hr { border: none; border-top: 1px solid var(--rule); margin: 2.5rem 0; }
 /* ── PAGE TITLE ── */
 .page-title {
   font-family: 'Bodoni Moda', serif;
-  font-weight: 400;
+  font-weight: 500;
   font-size: clamp(2rem, 5vw, 3rem);
   line-height: 1.1;
   letter-spacing: -0.01em;
@@ -117,7 +117,7 @@ hr { border: none; border-top: 1px solid var(--rule); margin: 2.5rem 0; }
 .e-year { color: var(--mid); font-size: 12px; padding-top: 0.15rem; }
 .e-title {
   font-family: 'Bodoni Moda', serif;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 1.15rem;
   line-height: 1.3;
   letter-spacing: -0.01em;
