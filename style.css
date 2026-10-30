@@ -208,7 +208,6 @@ hr { border: none; border-top: 1px solid var(--rule); margin: 2.5rem 0; }
 .hero-wrap {
   position: relative;        /* anchor for the overlay */
   width: 100%;
-  <!-- aspect-ratio: 16/9; -->        /* match whatever ratio your hero image is */
   overflow: hidden;
 }
 
@@ -240,7 +239,7 @@ hr { border: none; border-top: 1px solid var(--rule); margin: 2.5rem 0; }
 }
 
 .hero-overlay .page-title {
-  font-size: clamp(2.5rem, 4vw, 5rem);
+  font-size: clamp(2.5rem, 6vw, 5rem);
   color: #FAFAF8;
   line-height: 1.05;
   margin-bottom: 0.5rem;
