@@ -40,7 +40,7 @@ a.ext:visited { color: var(--visited); }
   align-items: baseline;
   flex-wrap: wrap;
   gap: 0 0.3rem;
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
   font-size: 15px;
 }
 
