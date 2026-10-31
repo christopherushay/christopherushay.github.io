@@ -234,6 +234,7 @@ hr { border: none; border-top: 1px solid var(--rule); margin: 2.5rem 0; }
 .hero-overlay {
   position: absolute;
   bottom: 2.5rem;
+  left: auto;
   right: 2.5rem;
   text-align: right;
   z-index: 2;               /* sits above the ::after scrim */
