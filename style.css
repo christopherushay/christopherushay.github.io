@@ -177,11 +177,11 @@ hr { border: none; border-top: 1px solid var(--rule); margin: 2.5rem 0; }
   /* 1. Define an animated gradient as the background */
   background: linear-gradient(
     90deg,
-    #1C1A17 0%,
-    #1C1A17 30%,
-    #C9A87C 50%,   /* highlight color — warm gold, adjust to taste */
-    #1C1A17 70%,
-    #1C1A17 100%
+    #FAFAF8 0%,
+    #FAFAF8 30%,
+    #C9A87C 50%,   /* Highlight color — warm gold, adjust to taste */
+    #FAFAF8 70%,
+    #FAFAF8 100% /* Original #1C1A17 */
   );
   background-size: 200% 100%; /* wider than the element so it can slide */
 
